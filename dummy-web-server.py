@@ -1,18 +1,23 @@
 #!/usr/bin/env python
 """
-Very simple HTTP server in python.
+Very simple HTTP server in python (Updated for Python 3.7)
 
-Usage::
-    ./dummy-web-server.py [<port>]
+Usage:
 
-Send a GET request::
-    curl http://localhost
+    ./dummy-web-server.py -h
+    ./dummy-web-server.py -l localhost -p 8000
 
-Send a HEAD request::
-    curl -I http://localhost
+Send a GET request:
 
-Send a POST request::
-    curl -d "foo=bar&bin=baz" http://localhost
+    curl http://localhost:8000
+
+Send a HEAD request:
+
+    curl -I http://localhost:8000
+
+Send a POST request:
+
+    curl -d "foo=bar&bin=baz" http://localhost:8000
 
 """
 import argparse
@@ -27,7 +32,7 @@ class S(BaseHTTPRequestHandler):
 
     def do_GET(self):
         self._set_headers()
-        self.wfile.write("<html><body><h1>hi!</h1></body></html>")
+        self.wfile.write(b"<html><body><h1>hi!</h1></body></html>")
 
     def do_HEAD(self):
         self._set_headers()
@@ -35,7 +40,7 @@ class S(BaseHTTPRequestHandler):
     def do_POST(self):
         # Doesn't do anything with posted data
         self._set_headers()
-        self.wfile.write("<html><body><h1>POST!</h1></body></html>")
+        self.wfile.write(b"<html><body><h1>POST!</h1></body></html>")
 
 
 def run(server_class=HTTPServer, handler_class=S, addr="localhost", port=8000):
